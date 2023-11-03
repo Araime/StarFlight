@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game_functions.cpp" />
     <ClCompile Include="StarFlight.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game_functions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
