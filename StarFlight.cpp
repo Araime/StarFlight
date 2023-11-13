@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <time.h>
 #include <Windows.h>
+
 #include "game_functions.h"
 
 using namespace std;
@@ -73,24 +74,26 @@ int main()
 		{
 			time = clock();
 
-			// make an offset to the left
-			if (dir == LEFT)
+			switch (dir)
 			{
+				// make an offset to the left
+				case LEFT:
 				for (int i = 0; i < SHIP_PARTS; i++)
 				{
 					--ship[i][1];
 				}
 				dir = STOP;
-			}
-			// make an offset to the right
-			if (dir == RIGHT)
-			{
+				break;
+				// make an offset to the right
+				case RIGHT:
 				for (int i = 0; i < SHIP_PARTS; i++)
 				{
 					++ship[i][1];
 				}
 				dir = STOP;
+				break;
 			}
+			
 			// update star coord
 			UpdateStarsCoord(stars, STARS_QTY);
 
@@ -133,7 +136,7 @@ int main()
 		CheckLives(lives, &isRunning);
 	}
 
-	// end game
+	// draw end game
 	GoToXY(1, HEIGHT / 2);
 	cout << "\tGAME OVER" << endl;
 	GoToXY(WIDTH, HEIGHT);
