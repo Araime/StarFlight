@@ -15,8 +15,11 @@ int main()
 	string map[HEIGHT][WIDTH];
 	CreateMap(map, HEIGHT, WIDTH);
 
-	// add arrow to variable as enum
-	enum Direction { LEFT, RIGHT, STOP };
+	// screen borders for ship
+	int left_border = 1;
+	int right_border = WIDTH - 2;
+
+	// init direction to variable
 	Direction dir = STOP;
 
 	// create stars
@@ -45,54 +48,19 @@ int main()
 	// game cycle
 	while (isRunning)
 	{
-		// checking the left key
-		if (GetKeyState('A') & 0x8000)
-		{
-			// checking that the ship does not rest on the left edge
-			if (ship[2][1] > 1)
-			{
-				dir = LEFT;
-			}
-		}
-		// checking the right key
-		if (GetKeyState('D') & 0x8000)
-		{
-			// checking that the ship does not rest on the right edge
-			if (ship[3][1] < WIDTH - 2)
-			{
-				dir = RIGHT;
-			}
-		}
-		// quit game
-		if (GetKeyState('Q') & 0x8000)
-		{
-			isRunning = false;
-		}
+		// check the entire input of the player's directions
+		CheckDirectionInput(dir, ship, left_border, right_border);
+
+		// check if quit game pressed
+		CheckQuitGame(isRunning);
 
 		// checking the elapsed time and executing
 		if ((clock() - time) / CLOCKS_PER_SEC >= speed)
 		{
 			time = clock();
 
-			switch (dir)
-			{
-				// make an offset to the left
-				case LEFT:
-				for (int i = 0; i < SHIP_PARTS; i++)
-				{
-					--ship[i][1];
-				}
-				dir = STOP;
-				break;
-				// make an offset to the right
-				case RIGHT:
-				for (int i = 0; i < SHIP_PARTS; i++)
-				{
-					++ship[i][1];
-				}
-				dir = STOP;
-				break;
-			}
+			// change ship coordinates
+			ChangeShipCoord(dir, ship, SHIP_PARTS);
 			
 			// update star coord
 			UpdateStarsCoord(stars, STARS_QTY);

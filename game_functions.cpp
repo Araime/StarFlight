@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+
 #include "game_functions.h"
 
 using namespace std;
@@ -246,4 +247,57 @@ void CheckCollision(int(*stars)[2], int stars_qty, int(*ship)[2], int ship_parts
 void CheckLives(int lives, bool* isRunning)
 {
 	if (lives == 0) *isRunning = false;
+}
+
+void CheckDirectionInput(Direction& user_dir, int(*ship)[2], int left, int right)
+{
+	// checking the left key pressed
+	if (GetKeyState('A') & 0x8000)
+	{
+		// checking that the ship does not rest on the left edge
+		if (ship[2][1] > left)
+		{
+			user_dir = LEFT;
+		}
+	}
+	// checking the right key pressed
+	if (GetKeyState('D') & 0x8000)
+	{
+		// checking that the ship does not rest on the right edge
+		if (ship[3][1] < right)
+		{
+			user_dir = RIGHT;
+		}
+	}
+}
+
+void ChangeShipCoord(Direction& user_dir, int(*ship)[2], int ship_parts)
+{
+	switch (user_dir)
+	{
+		// make an offset to the left
+	case LEFT:
+		for (int i = 0; i < ship_parts; i++)
+		{
+			--ship[i][1];
+		}
+		user_dir = STOP;
+		break;
+		// make an offset to the right
+	case RIGHT:
+		for (int i = 0; i < ship_parts; i++)
+		{
+			++ship[i][1];
+		}
+		user_dir = STOP;
+		break;
+	}
+}
+
+void CheckQuitGame(bool& is_run)
+{
+	if (GetKeyState('Q') & 0x8000)
+	{
+		is_run = false;
+	}
 }

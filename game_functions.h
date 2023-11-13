@@ -2,6 +2,14 @@
 
 using namespace std;
 
+enum Direction { LEFT, RIGHT, STOP };
+
+void CheckDirectionInput(Direction& user_dir, int(*ship)[2], int left, int right);
+
+void ChangeShipCoord(Direction& user_dir, int(*ship)[2], int ship_parts);
+
+void CheckQuitGame(bool& is_run);
+
 void CreateMap(string(*map)[30], int height, int width);
 
 void PrintMapBorders(string(*map)[30], int height, int width);
